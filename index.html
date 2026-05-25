@@ -95,7 +95,7 @@ border-radius:10px;
 padding:10px;
 }
 
-/* 🔥 animación IA */
+/* animación IA */
 .typing{
 white-space:pre-wrap;
 border-left:3px solid #38bdf8;
@@ -127,18 +127,26 @@ min-height:40px;
 <button class="btn" onclick="analizar()">Analizar IA</button>
 <button class="btn2" onclick="explicar()">🎤 Explicación IA</button>
 
+<!-- RESULTADO -->
 <div class="section">
 <h2>Resultado</h2>
+
 <div id="estado" class="estado">Esperando datos...</div>
 <div id="info"></div>
 <div id="confianza"></div>
+
+<!-- 🔥 RECOMENDACIÓN AHORA AQUÍ ABAJO -->
+<div id="rec" style="margin-top:10px;"></div>
+
 </div>
 
+<!-- GRAFICA -->
 <div class="section">
 <h2>📊 Modelo en tiempo real</h2>
 <canvas id="chart"></canvas>
 </div>
 
+<!-- ARQUITECTURA -->
 <div class="section">
 <h2>🧠 Arquitectura</h2>
 <p>Entradas → Contaminantes + clima</p>
@@ -146,16 +154,12 @@ min-height:40px;
 <p>Salida → Clasificación del aire</p>
 </div>
 
+<!-- REGLAS -->
 <div class="section">
 <h2>📌 Reglas base</h2>
 <p>PM2.5 > 60 → Riesgo alto</p>
 <p>PM10 > 100 → Riesgo alto</p>
 <p>O₃ > 80 → Riesgo alto</p>
-</div>
-
-<div class="section">
-<h2>💡 Recomendaciones / Explicación IA</h2>
-<div id="rec"></div>
 </div>
 
 <script>
@@ -176,17 +180,14 @@ data:[0,0,0,0,0]
 options:{
 responsive:true,
 scales:{
-y:{
-beginAtZero:true,
-suggestedMax:200
-}
+y:{beginAtZero:true,suggestedMax:200}
 }
 }
 });
 
 }
 
-// 🔥 ANALISIS IA (SIN CAMBIOS GRANDES)
+// 🔥 ANALISIS IA
 function analizar(){
 
 let pm25=parseFloat(document.getElementById("pm25").value)||0;
@@ -225,6 +226,8 @@ confianza=Math.max(55,Math.min(98,confianza));
 document.getElementById("estado").innerHTML=estado;
 document.getElementById("info").innerHTML="Score del modelo: "+score;
 document.getElementById("confianza").innerHTML="Confianza: "+confianza+"%";
+
+// 🔥 AHORA RECOMENDACIÓN JUSTO ABAJO
 document.getElementById("rec").innerHTML=rec;
 
 chart.data.datasets[0].data=[pm25,pm10,o3,temp,hum];
@@ -232,17 +235,15 @@ chart.update();
 
 }
 
-// 🔥 TYPEWRITER
+// 🔥 EXPLICACIÓN IA (sin cambios)
 function typeWriter(text, element, i=0){
 if(i===0) element.innerHTML="";
-
 if(i<text.length){
 element.innerHTML+=text.charAt(i);
 setTimeout(()=>typeWriter(text,element,i+1),12);
 }
 }
 
-// 🔥 IA EXPLICACIÓN AVANZADA
 function explicar(){
 
 let pm25=parseFloat(document.getElementById("pm25").value)||0;
@@ -253,43 +254,42 @@ let hum=parseFloat(document.getElementById("hum").value)||0;
 
 let pasos=[];
 
-pasos.push("🧠 INICIANDO SISTEMA DE EXPLICACIÓN IA");
-pasos.push("📥 Cargando datos ambientales...");
+pasos.push("🧠 INICIANDO EXPLICACIÓN IA");
+pasos.push("📥 Cargando datos...");
 
 if(pm25>60||pm10>100||o3>80){
-pasos.push("⚠️ Niveles CRÍTICOS detectados");
+pasos.push("⚠️ Nivel CRÍTICO detectado");
 }
 else if(pm25>30||pm10>50||o3>40){
-pasos.push("⚠️ Niveles MODERADOS detectados");
+pasos.push("⚠️ Nivel MODERADO detectado");
 }
 else{
-pasos.push("✅ Niveles seguros");
+pasos.push("✅ Nivel seguro");
 }
 
 if(temp>30){
-pasos.push("🌡️ Alta temperatura influye en dispersión");
+pasos.push("🌡️ Temperatura alta influye");
 }
 else if(hum>70){
-pasos.push("💧 Alta humedad afecta percepción del aire");
+pasos.push("💧 Humedad alta influye");
 }
 else{
-pasos.push("🌤️ Condiciones climáticas estables");
+pasos.push("🌤️ Clima estable");
 }
 
 let decision="";
-
 if(pm25>60||pm10>100||o3>80){
-decision="🔴 Clasificación final: MALA";
+decision="🔴 MALA calidad del aire";
 }
 else if(pm25>30||pm10>50||o3>40){
-decision="🟠 Clasificación final: MODERADA";
+decision="🟠 MODERADA calidad del aire";
 }
 else{
-decision="🟢 Clasificación final: BUENA";
+decision="🟢 BUENA calidad del aire";
 }
 
 pasos.push("🎯 "+decision);
-pasos.push("✔ Modelo basado en árbol de decisión + simulación probabilística");
+pasos.push("✔ Árbol de decisión + simulación probabilística");
 
 let texto="🧠 EXPLICACIÓN IA\n\n"+pasos.join("\n");
 
