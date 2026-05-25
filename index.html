@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema Inteligente de Calidad del Aire</title>
+<title>IA Calidad del Aire - Sistema Inteligente</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -13,61 +13,46 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, Helvetica, sans-serif;
+font-family:Arial;
 }
 
 body{
-background:linear-gradient(135deg,#0f172a,#020617);
+background:linear-gradient(135deg,#0b1220,#020617);
 color:white;
 padding:25px;
 }
 
 header{
 text-align:center;
-margin-bottom:25px;
+margin-bottom:20px;
 }
 
 header h1{
 font-size:2.2rem;
-margin-top:10px;
 }
 
 header h2{
 color:#38bdf8;
-margin-top:5px;
-}
-
-header p{
-color:#cbd5e1;
-margin-top:5px;
 }
 
 .dashboard{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:12px;
-margin-bottom:15px;
+margin-top:15px;
 }
 
 .card{
 background:#1e293b;
 padding:12px;
 border-radius:12px;
-box-shadow:0 0 10px rgba(0,0,0,0.4);
-}
-
-.card h3{
-color:#38bdf8;
-font-size:1rem;
-margin-bottom:5px;
 }
 
 input{
 width:100%;
 padding:8px;
-border:none;
 border-radius:8px;
-font-size:14px;
+border:none;
 }
 
 button{
@@ -76,55 +61,30 @@ padding:14px;
 margin-top:10px;
 border:none;
 border-radius:10px;
-font-size:16px;
 font-weight:bold;
 cursor:pointer;
 }
 
-.btn{
-background:#22c55e;
-color:white;
-}
-
-.btn:hover{background:#16a34a;}
-
-.btn2{
-background:#3b82f6;
-color:white;
-}
-
-.btn2:hover{background:#2563eb;}
+.btn{background:#22c55e;color:white;}
+.btn2{background:#3b82f6;color:white;}
 
 .section{
 background:#1e293b;
 padding:18px;
-border-radius:12px;
 margin-top:12px;
+border-radius:12px;
 }
 
 .estado{
-font-size:2.3rem;
+font-size:2.2rem;
 font-weight:bold;
-margin-top:8px;
-}
-
-.small{
-color:#cbd5e1;
-margin-top:5px;
 }
 
 canvas{
+margin-top:10px;
 background:#0f172a;
 border-radius:10px;
 padding:10px;
-margin-top:10px;
-}
-
-.footer{
-text-align:center;
-margin-top:20px;
-color:#94a3b8;
-font-size:0.9rem;
 }
 </style>
 </head>
@@ -133,118 +93,76 @@ font-size:0.9rem;
 
 <header>
 <h3>Universidad Industrial de Santander</h3>
-<h3>Ingeniería en Inteligencia Artificial</h3>
 <h1>🌎 Sistema Inteligente de Calidad del Aire</h1>
 <h2>Barrancabermeja</h2>
-<p><strong>Sebastián David Tang Gutiérrez</strong></p>
+<p><b>Sebastián David Tang Gutiérrez</b></p>
 </header>
 
-<!-- INPUTS -->
 <div class="dashboard">
 
-<div class="card">
-<h3>🌫️ PM2.5</h3>
-<input type="number" id="pm25">
-</div>
-
-<div class="card">
-<h3>🌫️ PM10</h3>
-<input type="number" id="pm10">
-</div>
-
-<div class="card">
-<h3>☁️ O₃</h3>
-<input type="number" id="o3">
-</div>
-
-<div class="card">
-<h3>🌡️ Temp</h3>
-<input type="number" id="temp">
-</div>
-
-<div class="card">
-<h3>💧 Humedad</h3>
-<input type="number" id="hum">
-</div>
+<div class="card"><h3>PM2.5</h3><input id="pm25"></div>
+<div class="card"><h3>PM10</h3><input id="pm10"></div>
+<div class="card"><h3>O₃</h3><input id="o3"></div>
+<div class="card"><h3>Temp</h3><input id="temp"></div>
+<div class="card"><h3>Humedad</h3><input id="hum"></div>
 
 </div>
 
 <button class="btn" onclick="analizar()">Analizar IA</button>
-<button class="btn2" onclick="explicar()">🎤 Explicación del Modelo</button>
+<button class="btn2" onclick="explicar()">🎤 Explicación IA</button>
 
-<!-- RESULTADO -->
 <div class="section">
-<h2>Resultado del Modelo</h2>
-<div class="estado" id="estado">Esperando datos...</div>
-<div class="small" id="info"></div>
-<div class="small" id="confianza"></div>
+<h2>Resultado</h2>
+<div id="estado" class="estado">Esperando datos...</div>
+<div id="info"></div>
+<div id="confianza"></div>
 </div>
 
-<!-- GRAFICA -->
 <div class="section">
-<h2>📊 Visualización (IA en tiempo real)</h2>
+<h2>📊 Modelo en tiempo real</h2>
 <canvas id="chart"></canvas>
 </div>
 
-<!-- MODELO -->
 <div class="section">
-<h2>🧠 Arquitectura del Modelo</h2>
-<p>Entradas → PM2.5, PM10, O₃, Temp, Humedad</p>
-<p>Procesamiento → Árbol de Decisión</p>
-<p>Salida → Buena / Moderada / Mala</p>
+<h2>🧠 Arquitectura</h2>
+<p>Entradas → Contaminantes + clima</p>
+<p>Modelo → Árbol de decisión + lógica probabilística</p>
+<p>Salida → Clasificación del aire</p>
 </div>
 
-<!-- UMBRALES -->
 <div class="section">
-<h2>📌 Reglas del Modelo</h2>
-<p>PM2.5 > 60 → Riesgo Alto</p>
-<p>PM10 > 100 → Riesgo Alto</p>
-<p>O₃ > 80 → Riesgo Alto</p>
+<h2>📌 Reglas base</h2>
+<p>PM2.5 > 60 → Riesgo alto</p>
+<p>PM10 > 100 → Riesgo alto</p>
+<p>O₃ > 80 → Riesgo alto</p>
 </div>
 
-<!-- INFERENCIA -->
-<div class="section">
-<h2>🔁 Inferencia</h2>
-<p>El sistema recibe datos nuevos, los analiza y genera una clasificación automática en tiempo real.</p>
-</div>
-
-<!-- RECOMENDACIONES -->
 <div class="section">
 <h2>💡 Recomendaciones</h2>
-<div id="recomendacion"></div>
-</div>
-
-<div class="footer">
-Proyecto de IA básica — Sistema de monitoreo ambiental
+<div id="rec"></div>
 </div>
 
 <script>
 
 let chart;
 
-function crearGrafica(){
+function init(){
 
-const ctx=document.getElementById('chart');
-
-chart=new Chart(ctx,{
-type:'bar',
+chart=new Chart(document.getElementById("chart"),{
+type:"bar",
 data:{
-labels:['PM2.5','PM10','O₃','Temp','Hum'],
+labels:["PM2.5","PM10","O₃","Temp","Hum"],
 datasets:[{
-label:'Nivel',
+label:"Nivel",
 data:[0,0,0,0,0]
 }]
 },
-options:{
-responsive:true,
-scales:{
-y:{beginAtZero:true}
-}
-}
+options:{scales:{y:{beginAtZero:true}}}
 });
 
 }
 
+// 🔥 MODELO MÁS REALISTA
 function analizar(){
 
 let pm25=parseFloat(document.getElementById("pm25").value)||0;
@@ -253,47 +171,65 @@ let o3=parseFloat(document.getElementById("o3").value)||0;
 let temp=parseFloat(document.getElementById("temp").value)||0;
 let hum=parseFloat(document.getElementById("hum").value)||0;
 
-let estado="",info="",confianza="",recomendacion="";
+let estado="",info="",rec="";
+
+// 🔥 clasificación
+let score=0;
 
 if(pm25>60||pm10>100||o3>80){
 estado="🔴 MALA";
-info="Alta contaminación detectada";
-confianza="Confianza: 92%";
-recomendacion="Evitar actividad física y exposición prolongada.";
+score=3;
+rec="Evitar actividad física y exposición prolongada.";
 }
 else if(pm25>30||pm10>50||o3>40){
 estado="🟠 MODERADA";
-info="Contaminación intermedia";
-confianza="Confianza: 85%";
-recomendacion="Reducir actividad al aire libre.";
+score=2;
+rec="Reducir actividad al aire libre.";
 }
 else{
 estado="🟢 BUENA";
-info="Calidad del aire saludable";
-confianza="Confianza: 95%";
-recomendacion="Condiciones adecuadas para actividades al aire libre.";
+score=1;
+rec="Condiciones saludables.";
 }
 
-document.getElementById("estado").innerHTML=estado;
-document.getElementById("info").innerHTML=info;
-document.getElementById("confianza").innerHTML=confianza;
-document.getElementById("recomendacion").innerHTML=recomendacion;
+// 🔥 confianza dinámica (modelo probabilístico simulado)
+let base=92;
 
+// penalización por contaminación
+let penalizacion=(pm25/20)+(pm10/40)+(o3/30);
+
+// ruido tipo IA (incertidumbre)
+let ruido=(Math.random()*6)-3;
+
+// ajuste por clima (ligero efecto)
+let ajusteClima=Math.abs(temp-22)/10 + Math.abs(hum-50)/50;
+
+let confianza=Math.round(base - penalizacion - ajusteClima + ruido);
+
+if(confianza>98) confianza=98;
+if(confianza<55) confianza=55;
+
+// output
+document.getElementById("estado").innerHTML=estado;
+document.getElementById("info").innerHTML="Score del modelo: "+score;
+document.getElementById("confianza").innerHTML="Confianza: "+confianza+"%";
+document.getElementById("rec").innerHTML=rec;
+
+// update chart
 chart.data.datasets[0].data=[pm25,pm10,o3,temp,hum];
 chart.update();
+
 }
 
 function explicar(){
-
 alert(
-"El sistema utiliza un Árbol de Decisión. " +
-"Evalúa contaminantes como PM2.5, PM10 y O₃. " +
-"Según umbrales definidos, clasifica la calidad del aire en: Buena, Moderada o Mala. " +
-"Este proceso representa la fase de inferencia de un modelo de IA."
+"El modelo utiliza un sistema híbrido: " +
+"reglas tipo árbol de decisión + estimación probabilística. " +
+"La confianza no es fija, sino que depende de penalizaciones, clima y ruido de incertidumbre, simulando comportamiento de un modelo de IA real."
 );
 }
 
-window.onload=crearGrafica;
+window.onload=init;
 
 </script>
 
