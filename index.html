@@ -48,7 +48,7 @@ padding:12px;
 border-radius:12px;
 }
 
-/* 🔥 RESTAURAR FLECHITAS */
+/* inputs */
 input{
 width:100%;
 padding:8px;
@@ -57,7 +57,7 @@ border:none;
 font-size:14px;
 }
 
-/* spinner visible */
+/* flechitas */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button{
 opacity:1;
@@ -93,6 +93,14 @@ margin-top:10px;
 background:#0f172a;
 border-radius:10px;
 padding:10px;
+}
+
+/* 🔥 animación IA */
+.typing{
+white-space:pre-wrap;
+border-left:3px solid #38bdf8;
+padding-left:10px;
+min-height:40px;
 }
 </style>
 </head>
@@ -146,7 +154,7 @@ padding:10px;
 </div>
 
 <div class="section">
-<h2>💡 Recomendaciones</h2>
+<h2>💡 Recomendaciones / Explicación IA</h2>
 <div id="rec"></div>
 </div>
 
@@ -170,7 +178,7 @@ responsive:true,
 scales:{
 y:{
 beginAtZero:true,
-suggestedMax:200   // 🔥 IMPORTANTE: evita que se “aplane” con valores grandes
+suggestedMax:200
 }
 }
 }
@@ -178,7 +186,7 @@ suggestedMax:200   // 🔥 IMPORTANTE: evita que se “aplane” con valores gra
 
 }
 
-// 🔥 MODELO FINAL
+// 🔥 ANALISIS IA (SIN CAMBIOS GRANDES)
 function analizar(){
 
 let pm25=parseFloat(document.getElementById("pm25").value)||0;
@@ -206,40 +214,90 @@ score=1;
 rec="Condiciones saludables.";
 }
 
-// 🔥 confianza dinámica realista
 let base=92;
-
-// penalización
 let penalizacion=(pm25/20)+(pm10/40)+(o3/30);
-
-// ruido tipo IA
 let ruido=(Math.random()*6)-3;
-
-// ajuste clima
 let ajusteClima=Math.abs(temp-22)/10 + Math.abs(hum-50)/50;
 
 let confianza=Math.round(base - penalizacion - ajusteClima + ruido);
-
-// límites reales
 confianza=Math.max(55,Math.min(98,confianza));
 
-// output
 document.getElementById("estado").innerHTML=estado;
 document.getElementById("info").innerHTML="Score del modelo: "+score;
 document.getElementById("confianza").innerHTML="Confianza: "+confianza+"%";
 document.getElementById("rec").innerHTML=rec;
 
-// update chart
 chart.data.datasets[0].data=[pm25,pm10,o3,temp,hum];
 chart.update();
 
 }
 
+// 🔥 TYPEWRITER
+function typeWriter(text, element, i=0){
+if(i===0) element.innerHTML="";
+
+if(i<text.length){
+element.innerHTML+=text.charAt(i);
+setTimeout(()=>typeWriter(text,element,i+1),12);
+}
+}
+
+// 🔥 IA EXPLICACIÓN AVANZADA
 function explicar(){
-alert(
-"El sistema combina reglas tipo árbol de decisión con un modelo probabilístico. " +
-"La confianza varía según contaminación, clima y ruido aleatorio simulando incertidumbre de IA real."
-);
+
+let pm25=parseFloat(document.getElementById("pm25").value)||0;
+let pm10=parseFloat(document.getElementById("pm10").value)||0;
+let o3=parseFloat(document.getElementById("o3").value)||0;
+let temp=parseFloat(document.getElementById("temp").value)||0;
+let hum=parseFloat(document.getElementById("hum").value)||0;
+
+let pasos=[];
+
+pasos.push("🧠 INICIANDO SISTEMA DE EXPLICACIÓN IA");
+pasos.push("📥 Cargando datos ambientales...");
+
+if(pm25>60||pm10>100||o3>80){
+pasos.push("⚠️ Niveles CRÍTICOS detectados");
+}
+else if(pm25>30||pm10>50||o3>40){
+pasos.push("⚠️ Niveles MODERADOS detectados");
+}
+else{
+pasos.push("✅ Niveles seguros");
+}
+
+if(temp>30){
+pasos.push("🌡️ Alta temperatura influye en dispersión");
+}
+else if(hum>70){
+pasos.push("💧 Alta humedad afecta percepción del aire");
+}
+else{
+pasos.push("🌤️ Condiciones climáticas estables");
+}
+
+let decision="";
+
+if(pm25>60||pm10>100||o3>80){
+decision="🔴 Clasificación final: MALA";
+}
+else if(pm25>30||pm10>50||o3>40){
+decision="🟠 Clasificación final: MODERADA";
+}
+else{
+decision="🟢 Clasificación final: BUENA";
+}
+
+pasos.push("🎯 "+decision);
+pasos.push("✔ Modelo basado en árbol de decisión + simulación probabilística");
+
+let texto="🧠 EXPLICACIÓN IA\n\n"+pasos.join("\n");
+
+let target=document.getElementById("rec");
+target.classList.add("typing");
+
+typeWriter(texto,target);
+
 }
 
 window.onload=init;
