@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Sistema Inteligente de Calidad del Aire</title>
 
-<style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<style>
 *{
 margin:0;
 padding:0;
@@ -17,272 +17,283 @@ font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-background:#0f172a;
+background:linear-gradient(135deg,#0f172a,#020617);
 color:white;
-padding:30px;
+padding:25px;
 }
 
 header{
 text-align:center;
-margin-bottom:40px;
+margin-bottom:25px;
 }
 
 header h1{
-font-size:2.3rem;
+font-size:2.2rem;
 margin-top:10px;
 }
 
 header h2{
-font-size:1.3rem;
 color:#38bdf8;
-margin-top:10px;
+margin-top:5px;
 }
 
 header p{
 color:#cbd5e1;
-margin-top:8px;
+margin-top:5px;
 }
 
 .dashboard{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-margin-bottom:30px;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:12px;
+margin-bottom:15px;
 }
 
 .card{
 background:#1e293b;
-padding:20px;
-border-radius:15px;
-box-shadow:0 0 15px rgba(0,0,0,0.3);
+padding:12px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,0.4);
 }
 
 .card h3{
-margin-bottom:10px;
 color:#38bdf8;
+font-size:1rem;
+margin-bottom:5px;
 }
 
 input{
 width:100%;
-padding:12px;
+padding:8px;
 border:none;
-border-radius:10px;
-margin-top:10px;
-font-size:16px;
+border-radius:8px;
+font-size:14px;
 }
 
 button{
 width:100%;
-padding:15px;
-background:#22c55e;
+padding:14px;
+margin-top:10px;
 border:none;
-border-radius:12px;
-color:white;
-font-size:18px;
-cursor:pointer;
-margin-top:15px;
+border-radius:10px;
+font-size:16px;
 font-weight:bold;
+cursor:pointer;
 }
 
-button:hover{
-background:#16a34a;
+.btn{
+background:#22c55e;
+color:white;
 }
 
-.resultado{
-text-align:center;
-padding:30px;
+.btn:hover{background:#16a34a;}
+
+.btn2{
+background:#3b82f6;
+color:white;
+}
+
+.btn2:hover{background:#2563eb;}
+
+.section{
 background:#1e293b;
-border-radius:15px;
-margin-top:20px;
+padding:18px;
+border-radius:12px;
+margin-top:12px;
 }
 
 .estado{
-font-size:3rem;
+font-size:2.3rem;
 font-weight:bold;
+margin-top:8px;
+}
+
+.small{
+color:#cbd5e1;
+margin-top:5px;
+}
+
+canvas{
+background:#0f172a;
+border-radius:10px;
+padding:10px;
 margin-top:10px;
 }
 
-.info{
-margin-top:15px;
-font-size:1.1rem;
-}
-
-.flujo{
-margin-top:30px;
-background:#1e293b;
-padding:25px;
-border-radius:15px;
-text-align:center;
-}
-
-.flujo h2{
-margin-bottom:20px;
-}
-
-.paso{
-margin:10px 0;
-font-size:1.1rem;
-}
-
 .footer{
-margin-top:30px;
 text-align:center;
+margin-top:20px;
 color:#94a3b8;
+font-size:0.9rem;
 }
-
 </style>
-
 </head>
 
 <body>
 
 <header>
-
 <h3>Universidad Industrial de Santander</h3>
-
-<h3>Programa de Ingeniería en Inteligencia Artificial</h3>
-
-<h1>🌎 Sistema Inteligente de Monitoreo de Calidad del Aire</h1>
-
+<h3>Ingeniería en Inteligencia Artificial</h3>
+<h1>🌎 Sistema Inteligente de Calidad del Aire</h1>
 <h2>Barrancabermeja</h2>
-
-<p>Proyecto de Introducción a la Ingeniería en Inteligencia Artificial</p>
-
 <p><strong>Sebastián David Tang Gutiérrez</strong></p>
-
 </header>
 
+<!-- INPUTS -->
 <div class="dashboard">
 
 <div class="card">
-<h3>PM2.5</h3>
-<input type="number" id="pm25" placeholder="Ingrese PM2.5">
+<h3>🌫️ PM2.5</h3>
+<input type="number" id="pm25">
 </div>
 
 <div class="card">
-<h3>PM10</h3>
-<input type="number" id="pm10" placeholder="Ingrese PM10">
+<h3>🌫️ PM10</h3>
+<input type="number" id="pm10">
 </div>
 
 <div class="card">
-<h3>Ozono (O₃)</h3>
-<input type="number" id="o3" placeholder="Ingrese O₃">
+<h3>☁️ O₃</h3>
+<input type="number" id="o3">
 </div>
 
 <div class="card">
-<h3>Temperatura (°C)</h3>
-<input type="number" id="temp" placeholder="Ingrese temperatura">
+<h3>🌡️ Temp</h3>
+<input type="number" id="temp">
 </div>
 
 <div class="card">
-<h3>Humedad (%)</h3>
-<input type="number" id="hum" placeholder="Ingrese humedad">
+<h3>💧 Humedad</h3>
+<input type="number" id="hum">
 </div>
 
 </div>
 
-<button onclick="analizar()">
-Analizar Calidad del Aire
-</button>
+<button class="btn" onclick="analizar()">Analizar IA</button>
+<button class="btn2" onclick="explicar()">🎤 Explicación del Modelo</button>
 
-<div class="resultado">
-
+<!-- RESULTADO -->
+<div class="section">
 <h2>Resultado del Modelo</h2>
-
-<div class="estado" id="estado">
-Esperando datos
+<div class="estado" id="estado">Esperando datos...</div>
+<div class="small" id="info"></div>
+<div class="small" id="confianza"></div>
 </div>
 
-<div class="info" id="riesgo"></div>
-
-<div class="info" id="confianza"></div>
-
-<div class="info" id="explicacion"></div>
-
+<!-- GRAFICA -->
+<div class="section">
+<h2>📊 Visualización (IA en tiempo real)</h2>
+<canvas id="chart"></canvas>
 </div>
 
-<div class="flujo">
+<!-- MODELO -->
+<div class="section">
+<h2>🧠 Arquitectura del Modelo</h2>
+<p>Entradas → PM2.5, PM10, O₃, Temp, Humedad</p>
+<p>Procesamiento → Árbol de Decisión</p>
+<p>Salida → Buena / Moderada / Mala</p>
+</div>
 
-<h2>Flujo de Inteligencia Artificial</h2>
+<!-- UMBRALES -->
+<div class="section">
+<h2>📌 Reglas del Modelo</h2>
+<p>PM2.5 > 60 → Riesgo Alto</p>
+<p>PM10 > 100 → Riesgo Alto</p>
+<p>O₃ > 80 → Riesgo Alto</p>
+</div>
 
-<div class="paso">📊 Recolección de Datos</div>
+<!-- INFERENCIA -->
+<div class="section">
+<h2>🔁 Inferencia</h2>
+<p>El sistema recibe datos nuevos, los analiza y genera una clasificación automática en tiempo real.</p>
+</div>
 
-<div class="paso">⬇</div>
-
-<div class="paso">🧹 Preparación de Datos</div>
-
-<div class="paso">⬇</div>
-
-<div class="paso">🌳 Árbol de Decisión</div>
-
-<div class="paso">⬇</div>
-
-<div class="paso">🧠 Inferencia</div>
-
-<div class="paso">⬇</div>
-
-<div class="paso">📈 Clasificación Final</div>
-
+<!-- RECOMENDACIONES -->
+<div class="section">
+<h2>💡 Recomendaciones</h2>
+<div id="recomendacion"></div>
 </div>
 
 <div class="footer">
-
-Proyecto académico desarrollado para comprender el flujo de entrenamiento e inferencia de modelos básicos de Inteligencia Artificial.
-
+Proyecto de IA básica — Sistema de monitoreo ambiental
 </div>
 
 <script>
+
+let chart;
+
+function crearGrafica(){
+
+const ctx=document.getElementById('chart');
+
+chart=new Chart(ctx,{
+type:'bar',
+data:{
+labels:['PM2.5','PM10','O₃','Temp','Hum'],
+datasets:[{
+label:'Nivel',
+data:[0,0,0,0,0]
+}]
+},
+options:{
+responsive:true,
+scales:{
+y:{beginAtZero:true}
+}
+}
+});
+
+}
 
 function analizar(){
 
 let pm25=parseFloat(document.getElementById("pm25").value)||0;
 let pm10=parseFloat(document.getElementById("pm10").value)||0;
 let o3=parseFloat(document.getElementById("o3").value)||0;
+let temp=parseFloat(document.getElementById("temp").value)||0;
+let hum=parseFloat(document.getElementById("hum").value)||0;
 
-let estado="";
-let riesgo="";
-let confianza="";
-let explicacion="";
+let estado="",info="",confianza="",recomendacion="";
 
-if(pm25>60 || pm10>100 || o3>80){
-
+if(pm25>60||pm10>100||o3>80){
 estado="🔴 MALA";
-riesgo="Nivel de Riesgo: Alto";
-confianza="Confianza del Modelo: 92%";
-
-explicacion=
-"El modelo detectó concentraciones elevadas de contaminantes atmosféricos, por lo que clasifica la calidad del aire como desfavorable.";
-
+info="Alta contaminación detectada";
+confianza="Confianza: 92%";
+recomendacion="Evitar actividad física y exposición prolongada.";
 }
-
-else if(pm25>30 || pm10>50 || o3>40){
-
+else if(pm25>30||pm10>50||o3>40){
 estado="🟠 MODERADA";
-riesgo="Nivel de Riesgo: Medio";
-confianza="Confianza del Modelo: 85%";
-
-explicacion=
-"Los contaminantes presentan valores intermedios. Se recomienda monitoreo continuo.";
-
+info="Contaminación intermedia";
+confianza="Confianza: 85%";
+recomendacion="Reducir actividad al aire libre.";
 }
-
 else{
-
 estado="🟢 BUENA";
-riesgo="Nivel de Riesgo: Bajo";
-confianza="Confianza del Modelo: 95%";
-
-explicacion=
-"Los contaminantes se encuentran dentro de niveles aceptables para la calidad del aire.";
-
+info="Calidad del aire saludable";
+confianza="Confianza: 95%";
+recomendacion="Condiciones adecuadas para actividades al aire libre.";
 }
 
 document.getElementById("estado").innerHTML=estado;
-document.getElementById("riesgo").innerHTML=riesgo;
+document.getElementById("info").innerHTML=info;
 document.getElementById("confianza").innerHTML=confianza;
-document.getElementById("explicacion").innerHTML=explicacion;
+document.getElementById("recomendacion").innerHTML=recomendacion;
 
+chart.data.datasets[0].data=[pm25,pm10,o3,temp,hum];
+chart.update();
 }
+
+function explicar(){
+
+alert(
+"El sistema utiliza un Árbol de Decisión. " +
+"Evalúa contaminantes como PM2.5, PM10 y O₃. " +
+"Según umbrales definidos, clasifica la calidad del aire en: Buena, Moderada o Mala. " +
+"Este proceso representa la fase de inferencia de un modelo de IA."
+);
+}
+
+window.onload=crearGrafica;
 
 </script>
 
